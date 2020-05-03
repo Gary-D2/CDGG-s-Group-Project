@@ -57,18 +57,15 @@ public: //These functions will be called later on in the code
 		if (rank == 13) return "King";
 	}
 
-
 	int get_suit() {
 		return suit;
 	}
-
 	string get_suit_string() //Converts the generated suit integer to one of the four suits
 	{
 		if (suit == 1) return "Diamonds";
 		if (suit == 2) return "Hearts";
 		if (suit == 3) return "Spades";
 		if (suit == 4) return "Clubs";
-		else return "Unknown suit";
 	}
 
 };
@@ -83,7 +80,6 @@ public:
 	newCard()
 
 	{
-
 		newrank = (1 + (std::rand() % (int)(13)));
 		newsuit = (1 + (std::rand() % (int)(4)));
 	}
@@ -91,7 +87,6 @@ public:
 	{
 		return newrank;
 	}
-
 	string get_newrank_string() {
 		if (newrank == 1) return "Ace";
 		if (newrank == 2) return "Two";
