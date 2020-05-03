@@ -141,7 +141,7 @@ int main()                                 // Starts Program's Main Menu
 				<< " 1) Rock, Paper Sissors!\n"               //@ Gary Davies <davies-g2@ulster.ac.uk>
 				<< " 2) Text Adventure!\n"                    //@ Dayo Law <law-D4@ulster.ac.uk>
 				<< " 3) Hangman!\n"                           //@ -
-				<< " 4) Hi-Lo Card Game!\n"                   //@ Gavin Slane
+				<< " 4) Hi-Lo Card Game!\n"                   //@ Gavin Slane <slane-g1@ulster.ac.uk>
 				<< " 5) Close Program\n"
 				<< ": ";
 
