@@ -148,7 +148,7 @@ while (PlayAgain)
 
 		{
 			cout << "You lose " + Player;
-			cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Would you like to play again?\n";
+			cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Enter 'y' to play again\n";
 			cin >> again;
 			if (again != 'y')
 			{
@@ -161,7 +161,7 @@ while (PlayAgain)
 
 		{
 			cout << "You win, congratulations " + Player;
-			cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Would you like to play again?\n";
+			cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Enter 'y' to play again\n";
 			cin >> again;
 			if (again != 'y')
 			{
