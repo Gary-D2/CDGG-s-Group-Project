@@ -582,11 +582,19 @@ private:
             break;
                 ;
             };
-        
+    /**
+     *
+     * The below code runs through the cases for varied numbers of wrong attempts
+     *
+     * As the player guesses more incorrect answers, more lines are added to the display
+     *
+     *
+     
+     */
     
         
-                 std::cout << "Enter your guess! (Answer in capital letters please..)"; //prompts the player to enter a guess
-                 std::cin >> guess; // allows the player to input a letter
+        std::cout << "Enter your guess! (Answer in capital letters please..)"; //prompts the player to enter a guess
+        std::cin >> guess; // allows the player to input a letter
             
          if (guess == Incorrect)
     while (Tries >= 0)
@@ -605,7 +613,7 @@ private:
              std::cout << "|                  " << std::endl;
              std::cout << "|__________________" << std::endl;
              std::cout << " You  have 6 tries left!"<< std::endl;
-             break;
+                                                                       break;
              }
              case 5:
              {
@@ -620,7 +628,7 @@ private:
              std::cout << "|                  " <<std::endl;
              std::cout << "|__________________" <<std::endl;
              std::cout << " You  have 5 tries left!"<< std::endl;
-             break;
+                                                                       break;
              }
              case 4:
              {
@@ -635,7 +643,7 @@ private:
              std::cout << "|                  " <<std::endl;
              std::cout << "|__________________" <<std::endl;
              std::cout << " You  have 4 tries left!"<< std::endl;
-             break;
+                                                                        break;
              }
              case 3:
              {
@@ -650,7 +658,7 @@ private:
              std::cout << "|                  " <<std::endl;
              std::cout << "|__________________" <<std::endl;
              std::cout << " You  have 3 tries left!"<< std::endl;
-             break;
+                                                                        break;
              }
              case 2:
                     
@@ -681,7 +689,7 @@ private:
              std::cout << "|         |_       " << std::endl;
              std::cout << "|                  " << std::endl;
              std::cout << "|__________________" << std::endl;
-             break;
+                                                                         break;
              }
               case 0:
                     
@@ -697,7 +705,7 @@ private:
              std::cout << "|                  " << std::endl;
              std::cout << "|__________________" << std::endl;
              std::cout << "      GAME OVER    " << std::endl;
-             break;
+                                                                         break;
                  {
                      
             
@@ -708,11 +716,12 @@ private:
         };
     
         
-        std::cin.get();
+        std::cin.get(); // attempt to allow the user to input
         return 0;
 }; //issue the code is not prompting user input and therefore automatically returning 0
 
 };
+
                   
 				unsigned int choice;
 				cout << "Do you want to return to main menu?\n";
