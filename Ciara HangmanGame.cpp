@@ -254,8 +254,15 @@ private:
                 ;
             };
         
+    /**
+    *
+    * The below code runs through the cases for varied numbers of wrong attempts
+    *
+    * As the player guesses more incorrect answers, more lines are added to the display
+    *
+    *
     
-        
+    */
                  std::cout << "Enter your guess! (Answer in capital letters please..)"; //prompts the player to enter a guess
                  std::cin >> guess; // allows the player to input a letter
             
