@@ -394,7 +394,7 @@ int main()                                 // Starts Program's Main Menu
 
 							{
 								cout << "You lose " + Player; //The code is pulling the information on the dealers card
-								cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Would you like to play again?\n";
+								cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Enter 'y' if you wish to play again\n";
 								cin >> again;
 								if (again != 'y')
 								{
@@ -407,7 +407,7 @@ int main()                                 // Starts Program's Main Menu
 
 							{
 								cout << "You win, congratulations " + Player;
-								cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Would you like to play again?\n";
+								cout << "\nThe next card was " << newCard.get_newrank_string() << " of " << newCard.get_newsuit_string() << "! Enter 'y' if you wish to play again\n";
 								cin >> again;
 								if (again != 'y') //Selecting 'y' will run the game again with new cards
 								{
