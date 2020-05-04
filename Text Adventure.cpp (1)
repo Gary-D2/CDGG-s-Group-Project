@@ -1,0 +1,472 @@
+// Text Adventure.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+/**
+* Code for a small text adventure demo thing...
+*
+* This program will display 'pages' of data, each 'page' will consist of flavour text
+* and the avalible choices each choice will bring you onto a new 'page' based on the
+* choice you picked.
+* Reference: http://www.cplusplus.com/forum/beginner/121532/
+* @Author Dayo Law <law-D4@ulster.ac.uk>
+* @CDCC group
+**/
+
+#include <iostream>  // Ability to read file.
+#include <string>    // -
+#include <stdlib.h>  // Standard libary of functions.
+#include <time.h>    // Generates time specific funtions.
+using namespace std; // Don't need to type out "std::" everytime.
+
+     // Previouly a structure - converted into a public class that shows how a page and any avalible choices are made.
+
+     class Page {                         // What a 'page' will consist of.
+public:
+
+
+
+
+
+	string text;                    // Will display the text of the current 'page' to the user 
+
+	int  options;                    // Indicates the number of avalible options to the user in the current page
+									 // if the value = 0, then this indicates the user has no
+									 // options and they ethier 'click to continue' or restart
+									 // due to a failstate (a game over).
+
+	int nextpage[10];                // Based on choice selected, the following 'page' will appear in response to it.
+									 // Also an array maximum of 10 different choices per one page (struct).
+};
+
+
+     // Where the data is stored (warning, very large).
+
+     Page  const selectpage[] = {
+
+
+		///////////////////////////////////////////
+		// Page 0: Welcome screen
+		{
+
+
+		"Welcome to the small text adventure.\n"
+
+			"Press 1 on your keyboard to continue.\n",
+			1,                             // Number of options avalible to the user
+		{ 1 }                             // The 'page' number the option above will
+									      // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 1: Introduction
+	{
+		"You are a seasoned traveller in the year 1680, travelling through a forest. Running out of supplies,\n"
+	"you decide to camp for the night and get ready to return to your home town...\n"
+	"Press 1 to continue\n",
+	1,                             // Number of options avalible to the player
+	{ 2 }                            // The 'page' number the option above will
+								   // lead you to.
+	},
+
+		///////////////////////////////////////////
+		// Page 2: Introduction
+		{
+		"You wake up from what felt like a good night of sleep and realise that you do not recognise this part of the forest.\n"
+			"Your supplies have gone and you are starving.\n"
+			"Press 1 to continue\n",
+			1,                             // Number of options avalible to the player
+		{ 3 }                            // The 'page' number the option above will
+									   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 3: First Choice
+		{
+			"While there is certainly a sense of urgency, do not forget that you are a seasoned traveller and have\n"
+			"been through similar events before. While analysing your immediate surroundings you recognise two distint paths... \n"
+			"one to your left and one to your right.\n"
+			"(1 for the left path, 2 for the path to the right)\n",
+			2,                             // Number of options avalible to the player
+			{4,5}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 4: Path to the left
+		{
+			"You follow the left path and while you do not recognise where you are, the path you have taken has shown repeated use\n"
+			"by... something, the footprints are hard to make out despite the bright weather.\n"
+			"(1 To continue the left path, 2 Travel back to the starting area)\n",
+			2,                             // Number of options avalible to the player
+			{6,3}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 5: Path to the right
+		{
+			"You follow the path to the right, you do not recognise these surroundings and the thick canopy here makes this path rather dark\n"
+			"As a seasoned traveller, you have been through paths like this in the past.\n"
+			"(1 To continue the right path, 2 Travel back to the starting area)\n",
+			2,                             // Number of options avalible to the player
+			{7,3}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 6: Continue left path
+		{
+			"You commit to the left path and you start to hear faint noises, like some sort of village population. As you continue down this path,\n"
+			"you see an entrance to a village and let out an instant sigh of relief.\n"
+			"(1 To continue towards the village, 2 To travel back towards the stating point)\n",
+			2,                             // Number of options avalible to the player
+			{8,3}                             // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 7: Continue path to Right
+		{
+			"You commit to the right path and come across a note inside one of the many trees...\n"
+			"                'If you are reading this, this means you may have lost your way.' \n"
+			"                'If this is the case, then you will be glad to know that there  '\n"
+			"                'is a village nearby. Continue down this path and go to your    '\n"
+			"                'left when avalible. Try to avoid losing your way again as there'\n"
+			"                'are animals that are attracted by the smell of food. Carry as  '\n"
+			"                'little as possible.                                            '\n"
+			"                '                                      - Village Spokesperson.  '\n"
+			"(1 To continue down the path, 2 To travel towards the starting area)\n",
+
+			2,                             // Number of options avalible to the player
+
+			{9,3}                             // The 'page' number the option above will
+												   // lead you to.
+
+		},
+
+		///////////////////////////////////////////
+		// Page 8: Village Entrance
+				{
+					"You have reached the village with a suprisingly high population of people. There are facilities to cook food or speak\n"
+					"to the village spokesperson.\n"
+					"(1 To speak with the village spokesperson, 2 Cook Food)\n",
+					2,                             // Number of options avalible to the player
+					{10,11}                          // The 'page' number the option above will
+												   // lead you to.
+				},
+
+		///////////////////////////////////////////
+		// Page 9: Pre-Quest Firewood Encounter
+			{
+				"You continue travelling and notice an abundance of firewood laying on the ground. You decide to continue down the path.\n"
+
+				"(1 To continue)\n",
+
+				1,                             // Number of options avalible to the player
+				{12},                          // The 'page' number the option above will
+
+											  // lead you to.
+			},
+
+		///////////////////////////////////////////
+		// Page 10: Village spokesperson
+	{
+		"Spokesperson: Welcome to the village! I can tell you are not from here. I can also tell that you are lost am I right?.\n"
+
+		"(1 'Yes, I am trying to find my way back home. Can you help?')\n",
+		1,                             // Number of options avalible to the player
+		{13}                          // The 'page' number the option above will
+									   // lead you to.
+	},
+
+		///////////////////////////////////////////
+		// Page 11: No food to cook in village
+		{
+			"You don't have any food to cook.\n"
+
+			"(1 To village entrance)\n",
+			1,                             // Number of options avalible to the player
+			{8}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 12: Crossroads - Right dead end
+		{
+			"You find yourself at a crossroad.\n"
+
+			"(1 Travel towards the path towards the left, 2 Travel towards the path towards the right)\n",
+			2,                             // Number of options avalible to the player
+			{14,15}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 13: Village (Quest explaination)
+		{
+			"Spokesperson: Yes of course! Well... somewhat. We need you to help us help you by collecting some firewood\n"
+			" so we can create a makeshift path for you at a dead end located near the village rear entrance.\n"
+			"(1 'Okay. Where do I start?')\n",
+			1,                             // Number of options avalible to the player
+			{16}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 14: Crossroads - Broken Bridge
+		{
+			"You take the left path and stumble across two more paths, to the right there is a broken bridge and to the\n"
+			"left you hear a feint noise, like a population of people.\n"
+			"(1 Take the path towards the left)\n",
+			1,                             // Number of options avalible to the player
+			{17}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+
+		///////////////////////////////////////////
+		// Page 15: Crossroads - Right dead end closer look
+		{
+			"You take the path to the right and hit a dense patch of forest, it is practically a dead end.\n"
+
+			"(1 Walk back towards the previous crossroad)\n",
+			1,                             // Number of options avalible to the player
+			{12}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 16: Quest acceptance
+		{
+			"Spokesperson: Great! Be warned though, carring too much food may bring you more trouble than good, please trust me.\n"
+
+			"(1 Exit the village via the rear entrance)\n",
+			1,                             // Number of options avalible to the player
+			{18}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 17: Entering village rear entrance
+		{
+			"You travel down this path and discover what looks like the rear entrance of a village,\n"
+			"and you let out a big sigh of relief\n"
+			"(1 Enter the village)\n",
+			1,                             // Number of options avalible to the player
+			{8}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 18: Approacing the broken bridge
+		{
+			"You travel down this path and come across a broken bridge and notice a sharp path to your right. You take\n"
+			"that path to the right and approach two seperating paths.\n"
+			"(1 Take the leftmost path, 2 Take the path towards the right)\n",
+			2,                             // Number of options avalible to the player
+			{19,20}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 19: Left path dead end
+		{
+			"You take the path to the left and hit a dense patch of forest, it is practically a dead end\n"
+
+			"(1 Walk back to where the paths seperated)\n",
+			1,                             // Number of options avalible to the player
+			{21}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 20: Towards the Firewood
+		{
+			"You travel down the path towards the right and managed to find the firewood the villager spoke about.\n"
+			"You proceed to pick some up and realise they are very heavy. Despite this, you decide to head back for the village.\n"
+			"(1 Take firewood to spokesperson)\n",
+			1,                             // Number of options avalible to the player
+			{22}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 21: Small backtrack
+		{
+			"You backtrack to where the paths began to seperate\n"
+
+			"(1 Take the path to the right)\n",
+			1,                             // Number of options avalible to the player
+			{20}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 22: Towards the Firewood
+		{
+			"You arrive at the village with firewood in hand...\n"
+
+			"(1 to continue)\n",
+			1,                             // Number of options avalible to the player
+			{23}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 23: Towards the Firewood
+		{
+			"and you suddenly collapse...\n"
+
+			"(1 to continue)\n",
+			1,                             // Number of options avalible to the player
+			{24}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 24: Towards the Firewood
+		{
+			"The village population rushes to aid and you are quickly admitted to the village hospital, thankfully\n"
+			"you only collapsed of starvation. You are given food and a suitable resting place until\n"
+			"the village has prepared the path for you to finally return home. In hindsight, things could have\n"
+			"ended up alot worse.\n"
+			"End\n",
+			0,                             // Number of options avalible to the player
+			{}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 25: Small animal encounter at Firewood
+		{
+			"A wild animal appears!\n"
+			"Luckily, it is a small animal you could easily overpower it and satisfy your hunger.\n"
+
+			"(1 Leave the animal be, 2 Gather food from that animal)\n",
+			2,                             // Number of options avalible to the player
+			{9,26}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 26: Raw meat?
+		{
+			"You subdued the animal and have sucssesfully extracted food from it. Do you wish to eat the food now?\n"
+
+			"(1 Eat it, 2 Do not eat it)\n",
+			2,                             // Number of options avalible to the player
+			{27,9}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+		///////////////////////////////////////////
+		// Page 27: Strange feeling
+		{
+			"You feel strange sensation.\n"
+
+			"(1 to continue)\n",
+			1,                             // Number of options avalible to the player
+			{9}                          // The 'page' number the option above will
+										   // lead you to.
+		},
+
+	};
+	
+	// Game logic - (Handling of data) using call by reference to the Page class to increase speed
+	// by not having to copy the structure through the function.
+
+	int dopage(int page)
+	{
+		// Output the flavour text (show the 'page')
+
+		cout << selectpage[page].text;
+
+		// If there are no options in any given struct ('page'), then that means a restart or a game over.
+
+		if (selectpage[page].options <= 0)         // If the 'options' variable in any given page is 0.
+			return -1;                            // -1 to indicate restart.
+
+
+		// Otherwise, give the user the ability to make a choice (to create the 'selection' variable).
+
+		int selection;             // Decleared selection variable
+
+		// User choice validation ( Does the user input match any of the choices avalible? )
+
+		// Hard to explain but will try, cin.clear/ignore step prevents an everlasting loop
+		// (when the input is NOT a small int) giving you a chance to input a new 'selection' variable. 
+		// If the variable is 'vaild', the loop is terminated at the condition step instead - emulating a
+		// 'valid' input.
+
+		for (cin >> selection; (selection < 1 || selection > selectpage[page].options);
+			cin.clear(), cin.ignore(256, '\n'), cin >> selection)
+			cout << "Invalid answer. Please press the number preceeding the choice presented.\n";
+
+		// A valid selection (choice) will tell the program to present the struct (page) corresponding to the choice made.
+
+		return selectpage[page].nextpage[selection - 1];         // -1 because the data pages start from zero but the selection variable
+																// starts from 1.
+
+	};
+
+	// Function Implementation - Random Number Generator
+
+	int RNG(int page) // Pass a pointer through function instead of whole structure
+	{
+		int* Pointer;     // Declare pointer.
+		Pointer = &page;  // Safley assign the pointer.
+						  // Should be able to change adresses instead of the content itself?
+		int rng;
+		int r;
+		((srand(time(0))));  // Start generator at time = 0.
+		for (r = 1; r <= 1; cin.clear(), cin.ignore(256, '\n'), r++)  // For loop to initiate once.
+
+			rng = rand() % 10;       // Generates number between 0 and 9.
+
+			//  cout << rng;         //... To test the function
+
+
+			//if (rng == 0 || rng == 1 || rng == 2 || rng == 3 || rng == 4)    // 50% chance of certain events.
+				//dopage(page = 25);   // One substructure memory address would be replaced with another (?)
+
+		return rng; // Return rng interger
+	};
+
+    // Allows the program to start in this order, contains function prototypes
+    int main()
+// Allows the program to start and determines the
+{ 	                                    // order at which select functions are called.
+										// Calles RNG function
+
+										//int testrng = 0;
+
+										//testrng = RNG(testrng);  to test the rng, events should line with if
+										// condition.
+										//cout << testrng;
+
+	int dopage(int page);               // Calls this function at this time with the "pages" as an
+
+										// argument.
+
+	int currentPage = 0;                // Susequenly calls 'page 0' after preparing dopage.
+
+										//int RNG(int& page);
+
+	while (currentPage >= 0)            // A loop to prevent the program from closing as
+										// long as there is no "game over".
+		                                // Where the derived page is lablled "0".
+	{
+
+		currentPage = dopage(currentPage);
+
+	}
+	return 0;
+};
+
+
+	// This should emulate a choose your own adventure book
+	// if done correctly.
+	// Additional data can be added without altering any functions (switch statments).
+	
+
+
+	
