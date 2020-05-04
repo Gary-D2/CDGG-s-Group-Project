@@ -336,6 +336,7 @@ int main()                                 // Starts Program's Main Menu
 * referencing from www.cplusplus.com: www.cplusplus.com/forum/beginner/251608/  and www.cplusplus.com/forum/beginner/221193/
 *
  */
+				
 class HangmanGame{
 /**
  *
@@ -391,21 +392,21 @@ private:
     
     char guess{}; // for std::cin so that user can make a guess
 
-    ///
     /**
      *
-     *@author Ciara
-     *The  section of code below contains the loops for game play
+     * @author Ciara
+     * The  section of code below contains the loops for game play
      *
      *
      * The idea is that as the player makes incorrect guesses a new line will be added to the screen, indicating that they have one less guess
-     *   the player is told at the start of the game that they have 7 lives, so they will have 6 attempts to guess the letters and then will be prompted to guess
+     *   the player was told at the start of the game that they have 7 lives, so they will have 6 attempts to guess the letters and then will be prompted to guess
      *   the word
      *
      * If the player does not guess the word correctly they will be shown "   GAME OVER   "
      * If the player guesses corectly they will see " YOU WIN!"
      *
-     *If the player makes a correct guess it will be shown in mystery word area on the last line of the screen
+     * If the player makes a correct guess the letter will be shown in mystery word area on the last line of the screen
+     *  The loops should run through each of the letters as long as the player has attempts left
      *
      */
     int Play(){
